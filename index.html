@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Hallavägen Väder</title>
+    
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h2>Hallavägen väder</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <table class="table">
+            <tbody class="left-table">
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-6">
+          <table class="table">
+            <tbody class="right-table">
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    
+    <script>
+        async function getWeatherData() {
+            const weatherData = await fetch("http://localhost:3137/weather_data").then(res => res.json());
+
+            const half_weatherData = Math.ceil(weatherData.length / 2);
+            const remaining_weatherData = weatherData.length - half_weatherData;
+
+            const leftItems = weatherData.slice(0, half_weatherData).map(temp => {
+                return `<tr><td>${temp}</td></tr>`;
+            });
+
+            const leftListEl = document.querySelector(".left-table");
+            leftListEl.innerHTML = leftItems.join("");
+
+            const rightItems = weatherData.slice(half_weatherData, weatherData.length).map(temp => {
+                return `<tr><td>${temp}</td></tr>`;
+            });
+            rightListEl = document.querySelector(".right-table");
+            rightListEl.innerHTML = rightItems.join("");
+        }
+        getWeatherData();
+        // Run the function every 10 seconds
+        setInterval(getWeatherData, 10000);
+    </script>
+    <!-- Bootstrap JS CDN -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  </body>
+</html>
