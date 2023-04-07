@@ -67,12 +67,14 @@ function parse_station_data(devices, modules) {
   var station_data = [];
   //console.log(devices);
   //console.log(modules);
+
+  station_data.push(`<b>Ute Temp:</b> ${modules[0].dashboard_data.Temperature}°C`);
   station_data.push(`<b>Kök Temp:</b> ${devices[0].dashboard_data.Temperature}°C`);
   station_data.push(`<b>Kök Hum:</b> ${devices[0].dashboard_data.Humidity}%`);
   station_data.push(`<b>Kök Tryck:</b> ${devices[0].dashboard_data.Pressure}hPa`);
 
-  station_data.push(`<b>Ute Temp:</b> ${modules[0].dashboard_data.Temperature}°C`);
-  station_data.push(`<b>Ute Regn:</b> ${modules[1].dashboard_data.Rain}mm`);
+  station_data.push(`<b>Ute Regn:</b> ${modules[1].dashboard_data.sum_rain_1}mm`);
+  station_data.push(`<b>Ute Regn (24h):</b> ${modules[1].dashboard_data.sum_rain_24}mm`);
 
   station_data.push(`<b>Vind:</b> ${modules[2].dashboard_data.WindStrength}m/s`);
 
