@@ -76,8 +76,8 @@ function parse_station_data(devices, modules) {
   station_data.push(`<b>Ute Regn:</b> ${modules[1].dashboard_data.sum_rain_1}mm`);
   station_data.push(`<b>Ute Regn (24h):</b> ${modules[1].dashboard_data.sum_rain_24}mm`);
 
-  station_data.push(`<b>Vind:</b> ${(modules[2].dashboard_data.WindStrength/3.57).toFixed(2)}m/s`);
-  station_data.push(`<b>Byvind:</b> ${(modules[2].dashboard_data.GustStrength/3.57).toFixed(2)}m/s`);
+  station_data.push(`<b>Vind:</b> ${(modules[2].dashboard_data.WindStrength/3.6).toFixed(2)}m/s`);
+  station_data.push(`<b>Byvind:</b> ${(modules[2].dashboard_data.GustStrength/3.6).toFixed(2)}m/s`);
   station_data.push(`<b>Riktning:</b> ${modules[2].dashboard_data.WindAngle}°`);
 
   station_data.push(`<b>Sovrum Temp:</b> ${modules[3].dashboard_data.Temperature}°C`);
