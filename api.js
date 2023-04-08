@@ -60,28 +60,38 @@ function refresh_access_token() {
   });
 }
 
+function utcToLocal(utcTimestamp) {
+  var date = new Date(utcTimestamp);
+  return date.toLocaleString();
+}
+
 // Run function every hour
 setInterval(refresh_access_token, 3600000);
 
 function parse_station_data(devices, modules) {
-  var station_data = [];
+  var weather_data = [];
+  var station_data = {};
   //console.log(devices);
   //console.log(modules);
 
-  station_data.push(`<b>Ute Temp:</b> ${modules[0].dashboard_data.Temperature}°C`);
-  station_data.push(`<b>Kök Temp:</b> ${devices[0].dashboard_data.Temperature}°C`);
-  station_data.push(`<b>Kök Hum:</b> ${devices[0].dashboard_data.Humidity}%`);
-  station_data.push(`<b>Kök Tryck:</b> ${devices[0].dashboard_data.Pressure}hPa`);
+  var localTimeString = utcToLocal(modules[0].dashboard_data.time_utc*1000);
 
-  station_data.push(`<b>Ute Regn:</b> ${modules[1].dashboard_data.sum_rain_1}mm`);
-  station_data.push(`<b>Ute Regn (24h):</b> ${modules[1].dashboard_data.sum_rain_24}mm`);
+  weather_data.push(`<b>Ute Temp:</b> ${modules[0].dashboard_data.Temperature}°C`);
+  weather_data.push(`<b>Kök Temp:</b> ${devices[0].dashboard_data.Temperature}°C`);
+  weather_data.push(`<b>Hum:</b> ${devices[0].dashboard_data.Humidity}%`);
+  weather_data.push(`<b>Tryck:</b> ${devices[0].dashboard_data.Pressure}hPa`);
 
-  station_data.push(`<b>Vind:</b> ${(modules[2].dashboard_data.WindStrength/3.6).toFixed(2)}m/s`);
-  station_data.push(`<b>Byvind:</b> ${(modules[2].dashboard_data.GustStrength/3.6).toFixed(2)}m/s`);
-  station_data.push(`<b>Riktning:</b> ${modules[2].dashboard_data.WindAngle}°`);
+  weather_data.push(`<b>Regn:</b> ${modules[1].dashboard_data.sum_rain_1}mm`);
+  weather_data.push(`<b>Regn (24h):</b> ${modules[1].dashboard_data.sum_rain_24}mm`);
 
-  station_data.push(`<b>Sovrum Temp:</b> ${modules[3].dashboard_data.Temperature}°C`);
+  weather_data.push(`<b>Vind:</b> ${(modules[2].dashboard_data.WindStrength/3.6).toFixed(2)}m/s`);
+  weather_data.push(`<b>Byvind:</b> ${(modules[2].dashboard_data.GustStrength/3.6).toFixed(2)}m/s`);
+  weather_data.push(`<b>Riktning:</b> ${modules[2].dashboard_data.WindAngle}°`);
 
+  weather_data.push(`<b>Sovrum Temp:</b> ${modules[3].dashboard_data.Temperature}°C`);
+
+  station_data['weather_data'] = weather_data;
+  station_data['time_updated'] = localTimeString;
   return station_data;
 }
 
